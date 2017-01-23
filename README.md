@@ -1,4 +1,4 @@
-A DSL for Constraint Satisfaction Problems
+A DSL for describing static Constraint Satisfaction Problems
 
 ### Test
 Run all tests
@@ -7,4 +7,5 @@ Run all tests
 
 Generate coverage report
 
+    sbt clean coverage test
     sbt coverageReport
