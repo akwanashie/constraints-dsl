@@ -4,6 +4,7 @@ lazy val appVersion = "1.0"
 name := appName
 version := appVersion
 scalaVersion := "2.11.8"
+coverageEnabled := true
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.6" % "test",
