@@ -1,9 +1,11 @@
 package components
 
-import helpers.TestSpec
+import helpers.{CheckSpec, TestSpec}
 
-class VariableSpec extends TestSpec {
-  describe("Variable") {
+import scala.util.Try
+
+class VariableSpec extends TestSpec with CheckSpec {
+  describe("A variable") {
     it("should not accept name empty string") {
       val expectedError = the [IllegalArgumentException] thrownBy Variable("")
       expectedError.getMessage should endWith("Variable name should not be empty.")
@@ -26,6 +28,20 @@ class VariableSpec extends TestSpec {
     it("name method should return the name of the variable") {
       val name = randomVariableName
       Variable(name).name shouldEqual name
+    }
+  }
+
+  describe("ScalaCheck: A variable") {
+    it("should not accept variable names that do not start with a letter") {
+      testAll(invalidVariableNames) {
+        (variableName: String) => Try(Variable(variableName)).isFailure
+      }
+    }
+
+    it("should accept only alphabets for the beginning of names") {
+      testAll(validVariableNames) {
+        (variableName: String) => Try(Variable(variableName)).isSuccess
+      }
     }
   }
 }
