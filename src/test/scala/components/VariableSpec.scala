@@ -1,6 +1,7 @@
 package components
 
 import helpers.{CheckSpec, TestSpec}
+import components.Dsl._
 
 import scala.util.Try
 
@@ -42,6 +43,13 @@ class VariableSpec extends TestSpec with CheckSpec {
       testAll(validVariableNames) {
         (variableName: String) => Try(Variable(variableName)).isSuccess
       }
+    }
+  }
+
+  describe("DSL: Variable") {
+    it("string to variable") {
+      val a: Variable = "a"
+      Variable("a") shouldEqual a
     }
   }
 }
