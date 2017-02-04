@@ -23,6 +23,10 @@ object Dsl {
     def <=(value: Double): Constraint = Constraint(terms, LEQ, value)
   }
 
+  implicit class ModelBuilder(objective: Objective) {
+    def subjectTo(constraints: Constraint*): Model = Model(constraints.toSet, objective)
+  }
+
   def max(terms: TermSet) = Objective(terms, MAX)
 
   def min(terms: TermSet) = Objective(terms, MIN)
