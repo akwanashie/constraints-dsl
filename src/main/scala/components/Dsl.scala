@@ -22,4 +22,8 @@ object Dsl {
 
     def <=(value: Double): Constraint = Constraint(terms, LEQ, value)
   }
+
+  def max(terms: TermSet) = Objective(terms, MAX)
+
+  def min(terms: TermSet) = Objective(terms, MIN)
 }

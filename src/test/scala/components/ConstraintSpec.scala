@@ -5,9 +5,9 @@ import helpers.TestSpec
 
 class ConstraintSpec extends TestSpec {
   describe("Constraint") {
-    it("should contain at least one variable") {
+    it("should contain at least one term") {
       val expectedError = the [IllegalArgumentException] thrownBy Constraint(Set.empty, EQ, 0)
-      expectedError.getMessage should endWith("Constraints must contain at least one term.")
+      expectedError.getMessage should endWith("At least one term is required.")
     }
 
     it("should not contain terms with the same variable") {
