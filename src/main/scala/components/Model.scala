@@ -1,6 +1,10 @@
 package components
 
-abstract sealed case class Model(constraints: Set[Constraint], objective: Objective)
+abstract sealed case class Model(constraints: Set[Constraint], objective: Objective) {
+  def +(constraint: Constraint): Model = Model(constraints + constraint, objective)
+
+  def withObjective(newObjective: Objective): Model = Model(constraints, newObjective)
+}
 
 object Model {
   def apply(constraints: Set[Constraint], objective: Objective): Model = {

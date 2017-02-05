@@ -20,6 +20,36 @@ class ModelSpec extends TestSpec {
       }
       expectedError.getMessage should endWith("Unused variable in objective function.")
     }
+
+    it("should allow new constraints to be added") {
+      val model = max(1("a") + 2("b")) subjectTo (
+          1("a") + 3("b") <= 5,
+          3("a") - 1("b") == 0
+        )
+      val newModel = model + (1("a") - 5("b") >= 0)
+      val expectedModel = max(1("a") + 2("b")) subjectTo (
+          1("a") + 3("b") <= 5,
+          3("a") - 1("b") == 0,
+          1("a") - 5("b") >= 0
+        )
+
+      newModel shouldEqual expectedModel
+    }
+
+    it("should allow for the objective function to be modified") {
+      val model = max(1("a") + 2("b")) subjectTo (
+          1("a") + 3("b") <= 5,
+          3("a") - 1("b") == 0
+        )
+      val newObjective = min(1("a") - 2("b"))
+      val newModel = model withObjective newObjective
+      val expectedModel = min(1("a") - 2("b")) subjectTo (
+          1("a") + 3("b") <= 5,
+          3("a") - 1("b") == 0
+        )
+
+      newModel shouldEqual expectedModel
+    }
   }
 
   describe("can be built from it's components") {
