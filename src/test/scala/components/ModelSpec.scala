@@ -2,6 +2,10 @@ package components
 
 import helpers.TestSpec
 import components.Dsl._
+import io.IOHandler
+import org.mockito.Mockito._
+
+import scala.util.Random
 
 class ModelSpec extends TestSpec {
   describe("Model") {
@@ -36,6 +40,16 @@ class ModelSpec extends TestSpec {
       newModel shouldEqual expectedModel
     }
 
+    it("should return all the variables used") {
+      val model = max(1("a") + 2("b")) subjectTo (
+        1("a") + 3("b") + 1("c") <= 5,
+        3("a") - 1("b") == 0,
+        1("c") <= 10
+        )
+      val expectedVariables: Set[Variable] = Set("a", "b", "c")
+      model.variables shouldEqual expectedVariables
+    }
+
     it("should allow for the objective function to be modified") {
       val model = max(1("a") + 2("b")) subjectTo (
           1("a") + 3("b") <= 5,
@@ -49,6 +63,34 @@ class ModelSpec extends TestSpec {
         )
 
       newModel shouldEqual expectedModel
+    }
+
+    it("should save model") {
+      val objective = max(-1("a") + 2("b") - 1.5("c"))
+      val constraints = Set(
+          1("a") + 3("b") <= 5,
+          3("a") - 1("b") == 0,
+          1("c") <= 10
+        )
+      val ioHandler = mock(classOf[IOHandler])
+      val fileName = Random.nextString(10)
+      val expectedBody =
+        s"""Maximize
+           |  -a + 2b - 1.5c
+           |Subject To
+           |  c0: a + 3b <= 5
+           |  c1: 3a - b = 10
+           |  c2: c <= 10
+           |Bounds
+           |  0 <= a <= 1
+           |  0 <= b <= 1
+           |  0 <= c <= 1
+           |Generals
+           |  a b c
+           |End""".stripMargin
+
+      Model(constraints, objective).save(fileName, ioHandler)
+      verify(ioHandler).save(fileName, expectedBody)
     }
   }
 

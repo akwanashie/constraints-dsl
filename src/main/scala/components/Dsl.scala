@@ -7,6 +7,10 @@ object Dsl {
     def apply(name: String): Term = Term(prefix, Variable(name))
   }
 
+  implicit class DoubleToTermConverter(prefix: Double) extends ((String) => Term) {
+    def apply(name: String): Term = Term(prefix, Variable(name))
+  }
+
   implicit def convertTermToTermSet(term: Term): TermSet = TermSet(Set(term))
 
   implicit def convertTermSetToSetOfTerms(termSet: TermSet): Set[Term] = termSet.terms

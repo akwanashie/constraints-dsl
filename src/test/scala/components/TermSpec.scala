@@ -4,6 +4,16 @@ import components.Dsl._
 import helpers.TestSpec
 
 class TermSpec extends TestSpec {
+  describe("Term") {
+    it("toString returns the terms string representation") {
+      3("a").toString shouldEqual "+3a"
+      1("a").toString shouldEqual "a"
+      (-1("a")).toString shouldEqual "-a"
+      3.5("a").toString shouldEqual "+3.5a"
+      (-3("a")).toString shouldEqual "-3a"
+    }
+  }
+
   describe("DSL: Term") {
     it("number and string to term") {
       val term: Term = 3("a")
