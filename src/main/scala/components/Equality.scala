@@ -1,9 +1,15 @@
 package components
 
-sealed class Equality(stringRep: String) {
-  override def toString: String = stringRep
+sealed trait Equality
+
+object EQ extends Equality {
+  override def toString: String = "="
 }
 
-object EQ extends Equality("=")
-object LEQ extends Equality("<=")
-object GEQ extends Equality(">=")
+object LEQ extends Equality {
+  override def toString: String = "<="
+}
+
+object GEQ extends Equality {
+  override def toString: String = ">="
+}

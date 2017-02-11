@@ -1,8 +1,6 @@
 package components
 
-sealed trait Direction {
-  override def toString: String
-}
+sealed trait Direction
 
 object MAX extends Direction {
   override def toString = "max"
