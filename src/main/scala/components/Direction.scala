@@ -1,8 +1,12 @@
 package components
 
-sealed class Direction (stringRep: String) {
-  override def toString: String = stringRep
+sealed trait Direction {
+  override def toString: String
 }
 
-object MAX extends Direction("Max")
-object MIN extends Direction("Min")
+object MAX extends Direction {
+  override def toString = "max"
+}
+object MIN extends Direction{
+  override def toString = "min"
+}

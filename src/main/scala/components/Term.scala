@@ -10,7 +10,7 @@ case class Term(prefix: Double, variable: Variable) {
     }
 
     (prefix.isValidInt, prefix) match {
-      case (_, 1.0) => s"${variable.name}"
+      case (_, 1.0) => s"+${variable.name}"
       case (_, -1.0) => s"-${variable.name}"
       case (true, _) => s"$sign${prefix.toInt}${variable.name}"
       case (false, _) => s"$sign$prefix${variable.name}"
