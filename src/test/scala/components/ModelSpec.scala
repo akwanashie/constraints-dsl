@@ -66,22 +66,6 @@ class ModelSpec extends TestSpec {
 
       newModel shouldEqual expectedModel
     }
-
-    ignore("should save model") {
-      // TODO fix the model verifier
-      val objective = max(-1("a") + 2("b") - 1.5("c"))
-      val constraints = Set(
-          1("a") + 3("b") <= 5,
-          3("a") - 1("b") == 0,
-          1("c") <= 10
-        )
-      val ioHandler = mock[IOHandler]
-      val fileName = Random.nextString(10)
-      val expectedBody = ""
-
-      Model(constraints, objective).save(fileName, ioHandler)
-      verify(ioHandler).save(fileName, expectedBody)
-    }
   }
 
   describe("can be built from it's components") {

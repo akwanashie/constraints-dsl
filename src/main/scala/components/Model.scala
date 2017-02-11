@@ -11,10 +11,12 @@ abstract sealed case class Model(constraints: Set[Constraint], objective: Object
 
   def withObjective(newObjective: Objective): Model = Model(constraints, newObjective)
 
-  val variables: Set[Variable] = constraints.flatMap(_.lhsTerms.map(_.variable))
+  def save(fileName: String, iOHandler: IOHandler = new FileIOHandler, format: Format = LP): Try[Unit] = {
+    val lpString = format match {
+      case LP => toLpString
+    }
 
-  def save(fileName: String, iOHandler: IOHandler = new FileIOHandler, format: Format = LP): Try[Unit] = format match {
-    case LP => saveAsLP(fileName, iOHandler)
+    iOHandler.save(fileName, lpString)
   }
 }
 

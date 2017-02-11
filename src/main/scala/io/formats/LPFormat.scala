@@ -1,23 +1,18 @@
 package io.formats
 
 import components.{Constraint, Objective, Term, Variable}
-import io.{FileIOHandler, IOHandler}
-
-import scala.util.Try
 
 trait LPFormat {
-  val variables: Set[Variable]
   val constraints: Set[Constraint]
   val objective: Objective
 
-  def saveAsLP(fileName: String, iOHandler: IOHandler = new FileIOHandler): Try[Unit] = {
-    val body =
+  lazy val variables: Set[Variable] = constraints.flatMap(_.lhsTerms.map(_.variable))
+
+  def toLpString: String = {
       s"""${objective.direction}: ${termsToString(objective.terms)};
          |$constraintsToString
          |$bounds
          |int ${variables.map(_.name).mkString(" ")};""".stripMargin
-
-    iOHandler.save(fileName, body)
   }
 
   private def termsToString(terms: Set[Term]) = {
@@ -41,7 +36,7 @@ trait LPFormat {
         case false => s"${constraint.rhsValue}"
       }
       s"$lhs ${constraint.equality} $value;"
-    } mkString "\r\n"
+    } mkString sys.props("line.separator")
   }
 
   private def bounds: String = {
