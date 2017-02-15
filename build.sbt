@@ -6,12 +6,19 @@ version := appVersion
 scalaVersion := "2.11.8"
 coverageEnabled := true
 
+mainClass in Compile := Some("io.console.ConstraintsTerminal")
+
+resolvers ++= Seq(
+  "spongepowered" at "https://repo.spongepowered.org/maven/"
+)
+
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.6" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.5" % "test",
   "org.mockito" % "mockito-core" % "2.7.2" % "test",
   "org.choco-solver" % "choco-solver" % "4.0.0.a",
-  "com.github.pathikrit" %% "better-files" % "2.15.0"
+  "com.github.pathikrit" %% "better-files" % "2.15.0",
+  "org.jline" % "jline" % "3.1.2"
 )
 
 assemblyJarName in assembly := s"$appName-$appVersion.jar"
