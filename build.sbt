@@ -12,13 +12,20 @@ resolvers ++= Seq(
   "spongepowered" at "https://repo.spongepowered.org/maven/"
 )
 
-libraryDependencies ++= Seq(
+val devDependenxies = Seq(
   "org.scalatest" %% "scalatest" % "2.2.6" % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.5" % "test",
-  "org.mockito" % "mockito-core" % "2.7.2" % "test",
+  "org.mockito" % "mockito-core" % "2.7.2" % "test"
+)
+
+val liveDependencies = Seq(
   "org.choco-solver" % "choco-solver" % "4.0.0.a",
   "com.github.pathikrit" %% "better-files" % "2.15.0",
   "org.jline" % "jline" % "3.1.2"
 )
 
+libraryDependencies ++= (devDependenxies ++ liveDependencies)
+
 assemblyJarName in assembly := s"$appName-$appVersion.jar"
+
+coverageEnabled := true

@@ -1,5 +1,6 @@
 package io.console
 
+import io.console.commands.{Command, Exit}
 import org.jline.reader.{LineReaderBuilder, UserInterruptException}
 import org.jline.terminal.{Terminal, TerminalBuilder}
 
