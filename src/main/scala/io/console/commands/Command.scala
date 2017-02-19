@@ -12,7 +12,7 @@ object Command {
     Help
   )
 
-  def apply(stringRep: String): Command = supportedCommands
+  def apply(stringRep: String, supportedCommands: Seq[Command] = supportedCommands): Command = supportedCommands
     .find(_.stringRep == stringRep)
     .getOrElse(throw new CommandException(s"Unrecognised command: $stringRep. Type 'help' to view options"))
 }
