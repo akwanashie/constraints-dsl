@@ -1,4 +1,4 @@
-A DSL for describing static Constraint Satisfaction Problems
+A DSL for describing static Constraint Satisfaction Problems.
 
 ### Test
 Run all tests
