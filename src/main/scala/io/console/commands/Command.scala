@@ -16,6 +16,7 @@ object Command {
     Max,
     Print,
     Save,
+    Clear,
     Blank,
     Exit,
     Help,
