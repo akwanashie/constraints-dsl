@@ -13,6 +13,7 @@ trait Command {
 object Command {
   private val supportedCommands: Seq[Command] = Seq(
     Optimize,
+    Print,
     Blank,
     Exit,
     Help
