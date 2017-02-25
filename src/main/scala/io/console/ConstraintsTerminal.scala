@@ -15,13 +15,13 @@ object ConstraintsTerminal extends App {
   private def readLine(prompt: String): Try[_] = {
     Try(lineReader.readLine(prompt))
       .map(commandString => Command(commandString))
-      .map(_.execute())
+      .map(_.execute(prompt))
       .recover(processErrors)
       .map(_ => readLine(prompt))
   }
 
   private def processErrors: PartialFunction[Throwable, Unit] = {
-    case error: UserInterruptException => Exit.execute()
+    case error: UserInterruptException => Exit.execute("")
     case error: Throwable => println(s"Error: ${error.getMessage}")
   }
 }

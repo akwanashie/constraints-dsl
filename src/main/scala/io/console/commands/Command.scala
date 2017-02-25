@@ -2,7 +2,10 @@ package io.console.commands
 
 trait Command {
   val stringRep: String
-  val execute: () => Unit
+
+  val startsWith = (commandString: String) => commandString.startsWith(stringRep)
+
+  val execute: String => Unit
 }
 
 object Command {
@@ -12,8 +15,13 @@ object Command {
     Help
   )
 
-  def apply(stringRep: String, supportedCommands: Seq[Command] = supportedCommands): Command = supportedCommands
-    .find(_.stringRep == stringRep)
-    .getOrElse(throw new CommandException(s"Unrecognised command: $stringRep. Type 'help' to view options"))
+  def apply(stringRep: String, supportedCommands: Seq[Command] = supportedCommands): Command = {
+    supportedCommands
+      .find(command => {
+        val modifiedString = if (stringRep.trim.isEmpty) Blank.stringRep else stringRep
+        command.startsWith(modifiedString)
+      })
+      .getOrElse(throw new CommandException(s"Unrecognised command: '$stringRep'. Type 'help' to view options"))
+  }
 }
 
