@@ -30,7 +30,7 @@ class LPFormatSpec extends TestSpec {
 
       val formatter = new LPFormat {
         override val constraints: Set[Constraint] = modelConstraints
-        override val objective: Objective = modelObjective
+        override val objective: Option[Objective] = Some(modelObjective)
       }
 
       // TODO fix issue with line seperator and multi-line strings here

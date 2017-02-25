@@ -13,7 +13,7 @@ class ModelSpec extends TestSpec {
   describe("Model") {
     it("should contain at least one constraint") {
       val objective = max(2("a"))
-      val expectedError = the [IllegalArgumentException] thrownBy Model(Set.empty, objective)
+      val expectedError = the [IllegalArgumentException] thrownBy Model(Set.empty, Some(objective))
       expectedError.getMessage should endWith("At least one constraint is required.")
     }
 
@@ -77,7 +77,7 @@ class ModelSpec extends TestSpec {
       val objective = max(1("a") + 1("b"))
 
       val model = objective subjectTo(constraints: _*)
-      model shouldEqual Model(constraints.toSet, objective)
+      model shouldEqual Model(constraints.toSet, Some(objective))
     }
   }
 }

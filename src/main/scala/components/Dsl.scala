@@ -11,6 +11,20 @@ object Dsl {
     def apply(name: String): Term = Term(prefix, Variable(name))
   }
 
+  implicit def stringToTermConverter(termString: String): Term = {
+      val regex = "([+\\- ]*[\\d]+[.]*[\\d]*)([A-Za-z]+)".r
+      val regex(prefix, variableName) = termString
+      Term(prefix.toDouble, variableName)
+  }
+
+  implicit def stringToEquality(equalityString: String): Equality = {
+    equalityString match {
+      case "=" => EQ
+      case "<=" => LEQ
+      case ">=" => GEQ
+    }
+  }
+
   implicit def convertTermToTermSet(term: Term): TermSet = TermSet(Set(term))
 
   implicit def convertTermSetToSetOfTerms(termSet: TermSet): Set[Term] = termSet.terms
@@ -28,7 +42,7 @@ object Dsl {
   }
 
   implicit class ModelBuilder(objective: Objective) {
-    def subjectTo(constraints: Constraint*): Model = Model(constraints.toSet, objective)
+    def subjectTo(constraints: Constraint*): Model = Model(constraints.toSet, Some(objective))
   }
 
   def max(terms: TermSet) = Objective(terms, MAX)

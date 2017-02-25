@@ -5,11 +5,11 @@ import io.handlers.{FileIOHandler, IOHandler}
 
 import scala.util.Try
 
-abstract sealed case class Model(constraints: Set[Constraint], objective: Objective) extends LPFormat {
+abstract sealed case class Model(constraints: Set[Constraint], objective: Option[Objective]) extends LPFormat {
 
   def +(constraint: Constraint): Model = Model(constraints + constraint, objective)
 
-  def withObjective(newObjective: Objective): Model = Model(constraints, newObjective)
+  def withObjective(newObjective: Objective): Model = Model(constraints, Some(newObjective))
 
   def save(fileName: String, iOHandler: IOHandler = new FileIOHandler, format: Format = LP): Try[Unit] = {
     val lpString = format match {
@@ -21,9 +21,9 @@ abstract sealed case class Model(constraints: Set[Constraint], objective: Object
 }
 
 object Model {
-  def apply(constraints: Set[Constraint], objective: Objective): Model = {
+  def apply(constraints: Set[Constraint], objective: Option[Objective] = None): Model = {
     require(constraints.nonEmpty, "At least one constraint is required.")
-    require(!unusedVariablesExist(constraints, objective), "Unused variable in objective function.")
+    objective.foreach(x => require(!unusedVariablesExist(constraints, x), "Unused variable in objective function."))
     new Model(constraints, objective) {}
   }
 
