@@ -6,7 +6,7 @@ version := appVersion
 scalaVersion := "2.11.8"
 coverageEnabled := true
 
-mainClass in Compile := Some("io.console.ConstraintsTerminal")
+mainClass in Compile := Some("io.console.Console")
 
 resolvers ++= Seq(
   "spongepowered" at "https://repo.spongepowered.org/maven/"

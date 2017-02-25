@@ -1,11 +1,13 @@
 package io.console.commands
 
+import io.console.ConsoleState
+
 trait Command {
   val stringRep: String
 
   val startsWith = (commandString: String) => commandString.startsWith(stringRep)
 
-  val execute: String => Unit
+  val execute: ConsoleState => ConsoleState
 }
 
 object Command {
