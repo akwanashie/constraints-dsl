@@ -14,7 +14,7 @@ object ConstraintsTerminal extends App {
 
   private def readLine(prompt: String): Try[_] = {
     Try(lineReader.readLine(prompt))
-      .map(commandString => Command(commandString))
+      .map(Command(_))
       .map(_.execute(prompt))
       .recover(processErrors)
       .map(_ => readLine(prompt))

@@ -1,7 +1,7 @@
 package components
 
-import io.{FileIOHandler, IOHandler}
 import io.formats.{Format, LP, LPFormat}
+import io.handlers.{FileIOHandler, IOHandler}
 
 import scala.util.Try
 

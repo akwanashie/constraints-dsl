@@ -2,7 +2,7 @@ package components
 
 import helpers.TestSpec
 import components.Dsl._
-import io.IOHandler
+import io.handlers.IOHandler
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar.mock
 import org.scalatest.MustMatchers

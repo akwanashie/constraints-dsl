@@ -10,6 +10,7 @@ trait Command {
 
 object Command {
   private val supportedCommands: Seq[Command] = Seq(
+    Optimize,
     Blank,
     Exit,
     Help
@@ -17,10 +18,7 @@ object Command {
 
   def apply(stringRep: String, supportedCommands: Seq[Command] = supportedCommands): Command = {
     supportedCommands
-      .find(command => {
-        val modifiedString = if (stringRep.trim.isEmpty) Blank.stringRep else stringRep
-        command.startsWith(modifiedString)
-      })
+      .find(_.startsWith(if (stringRep.trim.isEmpty) Blank.stringRep else stringRep))
       .getOrElse(throw new CommandException(s"Unrecognised command: '$stringRep'. Type 'help' to view options"))
   }
 }
