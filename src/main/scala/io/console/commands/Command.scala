@@ -17,7 +17,8 @@ object Command {
     Print,
     Blank,
     Exit,
-    Help
+    Help,
+    Constraint
   )
 
   def apply(stringRep: String, supportedCommands: Seq[Command] = supportedCommands): Command = {
