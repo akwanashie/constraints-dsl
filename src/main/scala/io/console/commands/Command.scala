@@ -12,7 +12,8 @@ trait Command {
 
 object Command {
   private val supportedCommands: Seq[Command] = Seq(
-    Optimize,
+    Min,
+    Max,
     Print,
     Blank,
     Exit,
