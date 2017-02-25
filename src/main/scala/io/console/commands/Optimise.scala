@@ -29,3 +29,5 @@ object Max extends Optimise {
 object Min extends Optimise {
   override val stringRep: String = "min"
 }
+
+// TODO Getting unused variable error when tring objective function a + b + c
