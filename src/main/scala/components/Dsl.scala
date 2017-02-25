@@ -12,9 +12,10 @@ object Dsl {
   }
 
   implicit def stringToTermConverter(termString: String): Term = {
-      val regex = "([+\\- ]*[\\d]+[.]*[\\d]*)([A-Za-z]+)".r
+      val regex = "([+\\- ]*[\\d]*[.]*[\\d]*)([A-Za-z]+)".r
       val regex(prefix, variableName) = termString
-      Term(prefix.toDouble, variableName)
+      val modifiedPrefixString = if(Seq("", "+", "-").contains(prefix.trim)) s"${prefix.trim}1.0" else prefix.trim
+      Term(modifiedPrefixString.toDouble, variableName)
   }
 
   implicit def stringToEquality(equalityString: String): Equality = {

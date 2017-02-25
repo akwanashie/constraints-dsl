@@ -10,13 +10,23 @@ import scala.util.Try
 object Constraint extends Command {
   override val stringRep: String = ""
 
-  override val execute = (state: ConsoleState) => Try {
-    val regex = "([A-Za-z0-9 +-]+)([><=]{2})([ \\d]+[.]*[\\d]*)".r
-    val regex(termsString, equalityString, rhsString) = state.commandString
+  override val execute = (state: ConsoleState) =>
+    Try {
+      val regex = "([A-Za-z0-9 +-]+)([><=]{2})([ \\d]+[.]*[\\d]*)".r
+      val regex(termsString, equalityString, rhsString) = state.commandString
 
-    val terms: Set[Term] = termsString.trim.split("[ ]+").toSet[String].map(x => stringToTermConverter(x))
-    val constraints = ModelConstraint(terms, equalityString, rhsString.trim.toDouble)
+      val termRegex = "[+-]*[\\d]*[.]*[\\d]*[A-Za-z]+".r
+      termRegex.findAllIn(termsString.replaceAll(" ", ""))
+      val terms: Set[Term] = termRegex.findAllIn(termsString.replaceAll(" ", ""))
+        .toSet[String]
+        .map(x => stringToTermConverter(x))
 
-    state.copy(model = Some(Model(Set(constraints), None)))
-  } getOrElse(throw new Exception(s"Could not parse constraint '${state.commandString}'"))
+      val constraint = ModelConstraint(terms, equalityString, rhsString.trim.toDouble)
+      val newModel = state.model match {
+        case None => Model(Set(constraint), None)
+        case Some(model) => model.+(constraint)
+      }
+
+      state.copy(model = Some(newModel))
+    } getOrElse(throw new Exception(s"Could not parse constraint '${state.commandString}'"))
 }
