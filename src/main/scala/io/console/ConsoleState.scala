@@ -1,7 +1,7 @@
 package io.console
 
 import components.Model
-import io.console.commands.Command
+import io.console.commands.{Blank, Command}
 
 // TODO Convert Option[Model] to a NullModel pattern
 case class ConsoleState(commandString: String, command: Command, model: Option[Model]) {
@@ -10,3 +10,5 @@ case class ConsoleState(commandString: String, command: Command, model: Option[M
   def update(commandString: String): ConsoleState =
     this.copy(commandString = commandString, command = Command(commandString))
 }
+
+object BlankState extends ConsoleState("", Blank, None)

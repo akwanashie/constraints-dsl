@@ -10,7 +10,7 @@ object Console extends App {
   private val terminal: Terminal = TerminalBuilder.builder().name("Constraints Solver").build()
   private val lineReader = LineReaderBuilder.builder().terminal(terminal).build()
 
-  readLine("constraints-solver> ", ConsoleState("", Blank, None))
+  readLine("constraints-solver> ", BlankState)
 
   private def readLine(prompt: String, state: ConsoleState): Try[_] = {
     Try(lineReader.readLine(prompt))
