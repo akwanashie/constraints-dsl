@@ -6,7 +6,7 @@ import io.console.ConsoleState
 
 abstract class Optimise extends Command {
   override val execute = (state: ConsoleState) => {
-    val components = state.commandString.split("[ ]+").toSet.tail.mkString.replaceAll(" ", "")
+    val components = state.commandString.split("[ ]+").tail.mkString.replaceAll(" ", "")
     val termRegex = "[+-]*[\\d]*[.]*[\\d]*[A-Za-z]+".r
     val terms: Set[Term] = termRegex.findAllIn(components)
       .toSet[String]
@@ -29,5 +29,3 @@ object Max extends Optimise {
 object Min extends Optimise {
   override val stringRep: String = "min"
 }
-
-// TODO Getting unused variable error when tring objective function a + b + c
