@@ -6,6 +6,7 @@ trait LPFormat {
   val constraints: Set[Constraint]
   val objective: Option[Objective]
 
+  // TODO remove this from here. it is being used by the backend models
   lazy val variables: Set[Variable] = constraints.flatMap(_.lhsTerms.map(_.variable))
 
   def toLpString: String = {

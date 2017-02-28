@@ -7,6 +7,8 @@ import scala.util.Try
 
 abstract sealed case class Model(constraints: Set[Constraint], objective: Option[Objective]) extends LPFormat {
 
+  override lazy val variables: Set[Variable] = constraints.flatMap(_.lhsTerms.map(_.variable))
+
   def +(constraint: Constraint): Model = Model(constraints + constraint, objective)
 
   def withObjective(newObjective: Objective): Model = Model(constraints, Some(newObjective))

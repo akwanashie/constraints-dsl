@@ -19,7 +19,7 @@ val devDependenxies = Seq(
 )
 
 val liveDependencies = Seq(
-  "org.choco-solver" % "choco-solver" % "4.0.0.a",
+  "org.choco-solver" % "choco-solver" % "4.0.1",
   "com.github.pathikrit" %% "better-files" % "2.15.0",
   "org.jline" % "jline" % "3.1.2"
 )
