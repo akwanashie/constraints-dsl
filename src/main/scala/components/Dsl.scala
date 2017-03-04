@@ -21,6 +21,7 @@ object Dsl {
   implicit def stringToEquality(equalityString: String): Equality = {
     equalityString match {
       case "=" => EQ
+      case "==" => EQ
       case "<=" => LEQ
       case ">=" => GEQ
     }

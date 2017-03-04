@@ -15,7 +15,7 @@ object Command {
     Min,
     Max,
     Print,
-    Save,
+    Export,
     Clear,
     Blank,
     Exit,
