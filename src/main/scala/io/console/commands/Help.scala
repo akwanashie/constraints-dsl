@@ -8,12 +8,12 @@ object Help extends Command {
   override val execute = (state: ConsoleState) => {
     println(
       s"""
-          |Available commands:
-          |************************
-          |[expression] ${margin(3)} ${Constraint.description}
-          |min [expression] ${margin(2)} ${Min.description}
-          |max [expression] ${margin(2)} ${Max.description}
-          |$generateHelpDescriptions
+         |Available commands:
+         |${"*" * 60}
+         |[expression] ${margin(3)} ${Constraint.description}
+         |min [expression] ${margin(2)} ${Min.description}
+         |max [expression] ${margin(2)} ${Max.description}
+         |$generateHelpDescriptions
        """.stripMargin)
     state
   }
@@ -23,7 +23,7 @@ object Help extends Command {
   private def margin(width: Int): String = "\t" * width
 
   private def generateHelpDescriptions: String = {
-    Seq(Clear, Print, Save, Exit, Load, Export) map { command =>
+    Seq(Clear, Solve, Print, Save, Exit, Load, Export) map { command =>
       s"${command.stringRep} ${margin(4)} ${command.description}"
     } mkString "\r\n"
   }

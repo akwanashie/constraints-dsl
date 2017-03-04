@@ -16,6 +16,7 @@ object Command {
   private val supportedCommands: Seq[Command] = Seq(
     Min,
     Max,
+    Solve,
     Print,
     Load,
     Save,
