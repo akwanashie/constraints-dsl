@@ -1,7 +1,7 @@
 package io.formats
 
 import components.Dsl._
-import components.{Constraint, Objective}
+import components.{Constraint, Objective, Variable}
 import helpers.TestSpec
 
 class LPFormatSpec extends TestSpec {
@@ -29,6 +29,7 @@ class LPFormatSpec extends TestSpec {
            |int a b c;""".stripMargin.trim
 
       val formatter = new LPFormat {
+        override lazy val variables: Set[Variable] = constraints.flatMap(_.lhsTerms.map(_.variable))
         override val constraints: Set[Constraint] = modelConstraints
         override val objective: Option[Objective] = Some(modelObjective)
       }
