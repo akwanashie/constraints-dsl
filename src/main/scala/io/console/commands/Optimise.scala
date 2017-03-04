@@ -24,8 +24,12 @@ abstract class Optimise extends Command {
 
 object Max extends Optimise {
   override val stringRep: String = "max"
+
+  override val description: String = "Adds an maximising optimisation function"
 }
 
 object Min extends Optimise {
   override val stringRep: String = "min"
+
+  override val description: String = "Adds an minimising optimisation function"
 }

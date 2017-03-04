@@ -10,6 +10,8 @@ import scala.util.Try
 object Constraint extends Command {
   override val stringRep: String = ""
 
+  override val description: String = "Adds a constraint to the model"
+
   override val execute = (state: ConsoleState) =>
     Try {
       val regex = "([A-Za-z0-9 +-]+)([><=]{2})([ \\d]+[.]*[\\d]*)".r

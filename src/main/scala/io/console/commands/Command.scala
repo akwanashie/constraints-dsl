@@ -8,6 +8,8 @@ trait Command {
   val startsWith = (commandString: String) => commandString.startsWith(stringRep)
 
   val execute: ConsoleState => ConsoleState
+
+  val description: String
 }
 
 object Command {
@@ -15,6 +17,8 @@ object Command {
     Min,
     Max,
     Print,
+    Load,
+    Save,
     Export,
     Clear,
     Blank,

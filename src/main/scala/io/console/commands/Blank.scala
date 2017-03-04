@@ -5,4 +5,5 @@ import io.console.ConsoleState
 object Blank extends Command {
   override val stringRep: String = "blank"
   override val execute = (state: ConsoleState) => state
+  override val description: String = ""
 }

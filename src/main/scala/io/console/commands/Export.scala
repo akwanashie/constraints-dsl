@@ -4,6 +4,9 @@ import io.console.ConsoleState
 
 object Export extends Command {
   override val stringRep: String = "export"
+
+  override val description: String = "Saves the model as a .lp file"
+
   override val execute = (state: ConsoleState) => {
     state.commandString.split("[ ]+").toList match {
       case command :: path :: Nil =>
