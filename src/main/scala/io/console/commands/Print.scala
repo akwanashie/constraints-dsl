@@ -6,7 +6,13 @@ object Print extends Command {
   override val stringRep: String = "print"
 
   override val execute = (state: ConsoleState) => {
-    println(state.model.map(_.toLpString).getOrElse("No model."))
+    println(
+      s"""
+         |${state.model.map(_.toLpString).getOrElse("No model.")}
+         |
+         |${state.solution.map(_.toString).getOrElse("No solution.")}
+       """.stripMargin
+    )
     state
   }
 
