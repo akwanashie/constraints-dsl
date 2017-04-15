@@ -10,14 +10,14 @@ import scala.util.Try
 
 case class ChocoModel(baseModel: Model) extends BackendModel {
 
-  val chocoModel = new ChocoSolverModel()
+  private lazy val chocoModel = new ChocoSolverModel()
 
   // TODO are we restricting variables to Int for now? if so, then maybe do the same for components.Model
-  val chocoVariables = generateChocoVariables(chocoModel)
+  private lazy val chocoVariables = generateChocoVariables(chocoModel)
 
-  val chocoModelWithConstraints = applyConstraints(chocoModel, chocoVariables)
+  private lazy val chocoModelWithConstraints = applyConstraints(chocoModel, chocoVariables)
 
-  val chocoModelWithConstraintsAndObjective = baseModel.objective
+  private lazy val chocoModelWithConstraintsAndObjective = baseModel.objective
     .map(_ => setObjective(chocoModelWithConstraints, chocoVariables))
     .getOrElse(chocoModelWithConstraints)
 
@@ -29,13 +29,14 @@ case class ChocoModel(baseModel: Model) extends BackendModel {
 
   private def applyConstraints(chocoModel: ChocoSolverModel, chocoVariables: Map[Variable, IntVar]): ChocoSolverModel = {
     baseModel.constraints.foldLeft(chocoModel) { case (currentModel, constraint) =>
+      // TODO what if a constraint does not have all the variables in it? This will fail!!!
       val varMap: Set[(IntVar, Int)] = constraint.lhsTerms.map(term =>
         (chocoVariables(term.variable), term.prefix.toInt)
       )
 
       currentModel.scalar(
-        varMap.map(_._1).toArray,
-        varMap.map(_._2).toArray,
+        varMap.toSeq.map(_._1).toArray,
+        varMap.toSeq.map(_._2).toArray,
         constraint.equality.toString,
         constraint.rhsValue.toInt
       ).post()
@@ -52,8 +53,8 @@ case class ChocoModel(baseModel: Model) extends BackendModel {
     val objVar = chocoModel.intVar("opt", IntVar.MIN_INT_BOUND, IntVar.MAX_INT_BOUND)
 
     chocoModel.scalar(
-      varMap.map(_._1).toArray,
-      varMap.map(_._2).toArray,
+      varMap.toSeq.map(_._1).toArray,
+      varMap.toSeq.map(_._2).toArray,
       "=",
       objVar
     ).post()

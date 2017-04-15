@@ -1,6 +1,7 @@
 package io.console.commands
 
 import backends.choco.ChocoModel
+import components.Model
 import io.console.ConsoleState
 
 import scala.util.{Failure, Success}
@@ -9,7 +10,7 @@ object Solve extends Command {
   override val stringRep: String = "solve"
 
   override val execute = (state: ConsoleState) => {
-    val model = state.model.getOrElse(throw new CommandException("No model to solve."))
+    val model: Model = state.model.getOrElse(throw new CommandException("No model to solve."))
     val backendModel = ChocoModel(model)
 
     backendModel.solve match {
