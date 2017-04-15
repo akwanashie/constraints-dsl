@@ -73,7 +73,7 @@ case class ChocoModel(baseModel: Model) extends BackendModel {
         baseVar.copy(value = chocoVar.getValue)
       } toSet
 
-      val objectiveValue: Option[Double] = baseModel.objective.map(objective => objective.terms
+      val objectiveValue: Option[Double] = baseModel.objective.map(objective => objective.terms.toSeq
         .map(term => term.prefix * chocoVariables(term.variable).getValue)
         .sum)
 
