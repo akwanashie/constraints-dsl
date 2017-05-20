@@ -15,7 +15,6 @@ object Solve extends Command {
 
     backendModel.solve match {
       case Success(solution) =>
-        println(s"Solution: ${solution.toString}")
         state.copy(solution = Some(solution))
       case Failure(error) =>
         throw error
