@@ -9,7 +9,8 @@ coverageEnabled := true
 mainClass in Compile := Some("io.console.Console")
 
 resolvers ++= Seq(
-  "spongepowered" at "https://repo.spongepowered.org/maven/"
+  "spongepowered" at "https://repo.spongepowered.org/maven/",
+  "Artima Maven Repository" at "http://repo.artima.com/releases"
 )
 
 val devDependenxies = Seq(
